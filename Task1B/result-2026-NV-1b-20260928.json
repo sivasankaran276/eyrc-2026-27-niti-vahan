@@ -1,0 +1,16 @@
+{
+    "generate": true,
+    "os_info": {
+        "name": "Linux",
+        "version": "#134~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Jun 30 14:05:04 UTC ",
+        "machine": "x86_64"
+    },
+    "python_version": "3.10.21",
+    "schedule": "22:R,53:L",
+    "rows": 2400,
+    "duration": 120.0,
+    "lane_changes": 2,
+    "meta": {
+        "evaluation_time": 126.80297327041626
+    }
+}
