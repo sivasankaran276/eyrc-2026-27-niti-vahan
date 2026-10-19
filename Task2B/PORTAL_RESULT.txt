@@ -1,0 +1,5 @@
+Task 2B portal result: 40/40
+Sign labels: 15/15
+Sign area: 10/10
+Obstacle presence: 10/10
+Obstacle area: 5/5
