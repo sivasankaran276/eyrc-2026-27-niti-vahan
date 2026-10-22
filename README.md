@@ -1,25 +1,303 @@
-# e-Yantra Niti Vahan 2026–27
+# e-Yantra Robotics Competition 2026–27 — Niti Vahan
 
-**Team ID:** 4027
+**Team ID:** 4027  
+**Repository:** `eyrc-2026-27-niti-vahan`  
+**Focus Areas:** Autonomous Driving · Computer Vision · Control Systems · Robotics Software
 
-Solutions and validated submission artifacts for the Niti Vahan theme.
+## About the Project
 
-## Task 2A — Lane Following
+This repository contains my implementations, evaluation artifacts, and selected candidate versions developed for the Niti Vahan theme of the e-Yantra Robotics Competition 2026–27.
 
-- Recorded portal score: 39.74/40
-- Source: `Task2A/task2a.py`
-- Supporting artifacts: JSON result and run CSV
+The work progresses from steering geometry and vehicle control to camera-based lane detection, autonomous lane following, road-sign classification, and obstacle detection.
 
-## Task 2B — Sign and Obstacle Detection
+The repository preserves Python source code, submission ZIP files, evaluation JSON files, trajectory data, and selected candidate implementations to support traceability and reproducibility.
 
-- Recorded portal score: 40/40
-- Source: `Task2B/sign_obstacle_detection.py`
-- Submission ZIP and SHA-256 checksum record included
+## Task Overview
 
-## Project areas
+| Task | Description | Recorded Result |
+|---|---|---:|
+| Task 1A | Ackermann Steering Geometry | Score not recorded here |
+| Task 1B | Path Tracking and Lane-Change Control | Score not recorded here |
+| Task 1C | Vision-Based Lane Detection | 49.35/50 — earlier reported private result |
+| Task 2A | Lane Following and Stop Handling | 39.74/40 |
+| Task 2B | Road-Sign and Obstacle Detection | 40/40 |
+ 
+**Task 1C result note:** An earlier private evaluation was reported as 49.35/50, with a public-set score of 45.38/50. A later result displayed 49.40/50 but was marked “Late, not eligible.” The eligibility and relationship between these attempts require confirmation from the competition portal.
 
-- Image processing with OpenCV
+Scores above are based on the reported evaluation results and are not independently certified by this repository.
+
+---
+
+## Task 1A — Ackermann Steering Geometry
+
+**Primary source:** `Task1A/NV_Task1A.py`
+
+### Objective
+
+Convert a virtual steering angle into the corresponding left and right front-wheel angles using Ackermann steering geometry.
+
+### Key concepts
+
+- Ackermann steering geometry
+- Wheelbase and track-width relationships
+- Steering-angle conversion
+- Straight-line steering behaviour
+- Numerical correctness and edge-case handling
+
+### Files
+
+- `NV_Task1A.py` — task implementation
+- `ackermann_steering.py` — steering implementation and local test file
+
+### Evaluation
+
+The implementation is intended to handle the zero-steering case and return geometrically correct wheel angles for positive and negative steering inputs.
+
+**Recorded score:** Not included in this README.
+
+---
+
+## Task 1B — Path Tracking and Lane-Change Control
+
+**Primary source:** `Task1B/path_tracking.py`
+
+### Objective
+
+Control the vehicle's steering in response to a target lane position and vehicle-state measurements, while following a prescribed lane-change schedule.
+
+### Key concepts
+
+- Vehicle path tracking
+- Lateral and heading errors
+- Steering control
+- Ackermann steering integration
+- Lane-change convergence
+- Settling time and overshoot
+- Simulation trajectory evaluation
+
+### Files
+
+- `path_tracking.py` — controller implementation
+- `NV_Task1B.zip` — packaged submission
+- `trajectory.csv` — recorded vehicle trajectory
+- `result-2026-NV-1b-20260928.json` — evaluation metadata
+
+### Recorded run metadata
+
+The included result JSON records a 120-second simulated run, 2,400 trajectory rows, and two lane changes.
+
+The source Python file and trajectory CSV were checked against their counterparts inside the submission ZIP using SHA-256 hashes; both pairs matched exactly.
+
+**Recorded score:** Not included in this README because the available result JSON does not contain the portal score.
+
+---
+
+## Task 1C — Vision-Based Lane Detection
+
+**Primary source:** `Task1C/lane_detection.py`
+
+### Objective
+
+Identify the vehicle's lane and estimate the lane centre from camera frames.
+
+### Key concepts
+
+- Image processing
+- Lane identification
+- Lane-centre estimation
+- Temporal consistency
+- Robustness across video frames
+- Computer-vision evaluation on public and private clips
+
+### Files
+
+- `lane_detection.py` — packaged lane-detection implementation
+- `NV_Task1C.zip` — submission archive
+- `NV_Task1C.json` — public-set evaluation result
+- `candidates/lane_detection_V11_TEMPORAL_49_35_PRIVATE.py` — selected candidate version
+- `candidates/lane_detection_V12_48_09_PUBLIC.py` — selected candidate version
+
+### Reported evaluation
+
+**Earlier reported private result: 49.35/50**
+
+- Lane identification: 19.94/20
+- Lane centre: 29.41/30
+- Lane identification accuracy: 99.9%
+- Lane-centre accuracy within tolerance: 98.0%
+- Mean centre error: 8.3 pixels
+- Frames scored: 3,631 out of 4,000
+- Ambiguous frames excluded: 369
+- Reported evaluation time: 51 seconds
+
+The accompanying local JSON records a separate public-set result of **45.38/50**.
+
+The current source file and the script extracted from `NV_Task1C.zip` have matching SHA-256 hashes. The local package currently matches the V12 public candidate. The exact link between the V11 candidate and the earlier private portal result has not yet been established.
+
+---
+
+## Task 2A — Lane Following and Stop Handling
+
+**Primary source:** `Task2A/task2a.py`
+
+### Objective
+
+Implement lane-following behaviour in the Niti Vahan simulation, maintaining lane position and responding to the evaluator's stop requests.
+
+### Key concepts
+
+- Autonomous lane following
+- Steering control
+- Lane-centre tracking
+- Stop-request handling
+- Simulation-based evaluation
+- Trajectory analysis
+
+### Recorded result
+
+**39.74/40**
+
+The reported portal evaluation recorded:
+
+- Outer-lane in-lane percentage: 98.7%
+- Outer-lane mean error: 1.6 cm
+- Inner-lane in-lane percentage: 99.2%
+- Inner-lane mean error: 1.3 cm
+- Stops: 6/6
+- Laps: 8/8
+
+### Files
+
+- `task2a.py` — task implementation
+- `NV_Task2A.json` — recorded evaluation result
+- `NV_Task2A_run.csv` — recorded run data
+
+The score and metrics above are reproduced from the previously reported portal result.
+
+---
+
+## Task 2B — Road-Sign and Obstacle Detection
+
+**Primary source:** `Task2B/sign_obstacle_detection.py`
+
+### Objective
+
+Detect and classify supported road signs and determine obstacle presence and apparent area from images.
+
+### Supported road signs
+
+- School
+- Speed40
+- Parking
+- Hospital
+
+### Key concepts
+
+- OpenCV image processing
+- HSV colour segmentation
+- Morphological operations
+- Contour analysis
+- Geometric shape filtering
 - Road-sign classification
-- Obstacle detection and area estimation
-- Autonomous lane-following control
+- Obstacle-presence detection
+- Pixel-area estimation
+
+### Recorded result
+
+**40/40 — full marks**
+
+| Evaluation category | Score |
+|---|---:|
+| Sign labels | 15/15 |
+| Sign area accuracy | 10/10 |
+| Obstacle presence | 10/10 |
+| Obstacle area accuracy | 5/5 |
+| **Total** | **40/40** |
+
+### Files
+
+- `sign_obstacle_detection.py` — winning source implementation
+- `NV_Task2B.zip` — submission archive
+- `SHA256SUMS.txt` — recorded file checksums
+- `PORTAL_RESULT.txt` — saved score summary
+
+The final source and packaged submission were checked for ZIP integrity. The reported private portal result was 40/40.
+
+---
+
+## Repository Structure
+
+```text
+eyrc-2026-27-niti-vahan/
+├── README.md
+│
+├── Task1A/
+│   ├── NV_Task1A.py
+│   └── ackermann_steering.py
+│
+├── Task1B/
+│   ├── path_tracking.py
+│   ├── NV_Task1B.zip
+│   ├── trajectory.csv
+│   └── result-2026-NV-1b-20260928.json
+│
+├── Task1C/
+│   ├── lane_detection.py
+│   ├── NV_Task1C.zip
+│   ├── NV_Task1C.json
+│   └── candidates/
+│       ├── lane_detection_V11_TEMPORAL_49_35_PRIVATE.py
+│       └── lane_detection_V12_48_09_PUBLIC.py
+│
+├── Task2A/
+│   ├── task2a.py
+│   ├── NV_Task2A.json
+│   └── NV_Task2A_run.csv
+│
+└── Task2B/
+    ├── sign_obstacle_detection.py
+    ├── NV_Task2B.zip
+    ├── SHA256SUMS.txt
+    └── PORTAL_RESULT.txt
+```
+
+*This layout describes the intended curated repository; individual files should be checked against the actual GitHub tree.*
+
+## Technology Stack
+
+- **Python** — implementation and control logic
+- **OpenCV** — computer-vision operations
+- **NumPy** — numerical and array processing
+- **CoppeliaSim** — robotics simulation
+- **eYantra AutoEval** — task evaluation
+- **Git and GitHub** — version control and source-code management
+
+## Reproducibility and Version Control
+
+The repository keeps selected source implementations and supporting submission artifacts together. This helps make it easier to:
+
+- Compare candidate implementations.
+- Identify which source file corresponds to a packaged submission.
+- Preserve evaluation outputs.
+- Verify file identity using SHA-256 checksums.
+- Trace changes through Git commit history.
+
+Evaluation results can depend on the test set and grading context. Local public-set results should not be treated as equivalent to private portal scores.
+
+## Competition Integrity
+
+This repository is maintained for personal project documentation, development history, and technical review.
+
+All code sharing and redistribution should follow the applicable e-Yantra competition rules. Keep the repository private unless the competition organizers permit public sharing of the relevant solutions.
+
+## Acknowledgements
+
+Thanks to the e-Yantra Robotics Competition team for providing the Niti Vahan theme, task specifications, and evaluation environment.
+
+---
+
+**Team 4027 — Niti Vahan 2026–27**
+
+*Autonomous systems, computer vision, and robotics software.*
+
 
