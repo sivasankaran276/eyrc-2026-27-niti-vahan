@@ -23,10 +23,3 @@ Solutions and validated submission artifacts for the Niti Vahan theme.
 - Obstacle detection and area estimation
 - Autonomous lane-following control
 
-## Reproducibility
-
-Keep the winning source files and their associated submission
-artifacts unchanged. The recorded scores refer to the portal results.
-
-Before redistributing this repository, confirm that sharing the
-competition solutions is permitted by the e-Yantra rules.
