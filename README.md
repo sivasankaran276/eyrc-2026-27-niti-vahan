@@ -8,7 +8,7 @@
 
 This repository contains my implementations, evaluation artifacts, and selected candidate versions developed for the Niti Vahan theme of the e-Yantra Robotics Competition 2026–27.
 
-The work progresses from steering geometry and vehicle control to camera-based lane detection, autonomous lane following, road-sign classification, and obstacle detection.
+The work progresses from steering geometry and vehicle control to camera-based lane detection, autonomous lane following, road-sign classification, obstacle detection, and autonomous parking.
 
 The repository preserves Python source code, submission ZIP files, evaluation JSON files, trajectory data, and selected candidate implementations to support traceability and reproducibility.
 
@@ -21,10 +21,11 @@ The repository preserves Python source code, submission ZIP files, evaluation JS
 | Task 1C | Vision-Based Lane Detection | 49.35/50 — earlier reported private result |
 | Task 2A | Lane Following and Stop Handling | 39.74/40 |
 | Task 2B | Road-Sign and Obstacle Detection | 40/40 |
- 
+| Task 2C | ArUco-Based Autonomous Parking | Manual tests completed; official score pending |
+
 **Task 1C result note:** An earlier private evaluation was reported as 49.35/50, with a public-set score of 45.38/50. A later result displayed 49.40/50 but was marked “Late, not eligible.” The eligibility and relationship between these attempts require confirmation from the competition portal.
 
-Scores above are based on the reported evaluation results and are not independently certified by this repository.
+Scores above are based on the reported evaluation results and are not independently certified by this repository. Task 2C's manual simulation results are not official portal scores.
 
 ---
 
@@ -36,7 +37,7 @@ Scores above are based on the reported evaluation results and are not independen
 
 Convert a virtual steering angle into the corresponding left and right front-wheel angles using Ackermann steering geometry.
 
-### Key concepts
+### Key Concepts
 
 - Ackermann steering geometry
 - Wheelbase and track-width relationships
@@ -65,7 +66,7 @@ The implementation is intended to handle the zero-steering case and return geome
 
 Control the vehicle's steering in response to a target lane position and vehicle-state measurements, while following a prescribed lane-change schedule.
 
-### Key concepts
+### Key Concepts
 
 - Vehicle path tracking
 - Lateral and heading errors
@@ -82,7 +83,7 @@ Control the vehicle's steering in response to a target lane position and vehicle
 - `trajectory.csv` — recorded vehicle trajectory
 - `result-2026-NV-1b-20260928.json` — evaluation metadata
 
-### Recorded run metadata
+### Recorded Run Metadata
 
 The included result JSON records a 120-second simulated run, 2,400 trajectory rows, and two lane changes.
 
@@ -100,7 +101,7 @@ The source Python file and trajectory CSV were checked against their counterpart
 
 Identify the vehicle's lane and estimate the lane centre from camera frames.
 
-### Key concepts
+### Key Concepts
 
 - Image processing
 - Lane identification
@@ -117,7 +118,7 @@ Identify the vehicle's lane and estimate the lane centre from camera frames.
 - `candidates/lane_detection_V11_TEMPORAL_49_35_PRIVATE.py` — selected candidate version
 - `candidates/lane_detection_V12_48_09_PUBLIC.py` — selected candidate version
 
-### Reported evaluation
+### Reported Evaluation
 
 **Earlier reported private result: 49.35/50**
 
@@ -144,7 +145,7 @@ The current source file and the script extracted from `NV_Task1C.zip` have match
 
 Implement lane-following behaviour in the Niti Vahan simulation, maintaining lane position and responding to the evaluator's stop requests.
 
-### Key concepts
+### Key Concepts
 
 - Autonomous lane following
 - Steering control
@@ -153,7 +154,7 @@ Implement lane-following behaviour in the Niti Vahan simulation, maintaining lan
 - Simulation-based evaluation
 - Trajectory analysis
 
-### Recorded result
+### Recorded Result
 
 **39.74/40**
 
@@ -184,14 +185,14 @@ The score and metrics above are reproduced from the previously reported portal r
 
 Detect and classify supported road signs and determine obstacle presence and apparent area from images.
 
-### Supported road signs
+### Supported Road Signs
 
 - School
 - Speed40
 - Parking
 - Hospital
 
-### Key concepts
+### Key Concepts
 
 - OpenCV image processing
 - HSV colour segmentation
@@ -202,11 +203,11 @@ Detect and classify supported road signs and determine obstacle presence and app
 - Obstacle-presence detection
 - Pixel-area estimation
 
-### Recorded result
+### Recorded Result
 
 **40/40 — full marks**
 
-| Evaluation category | Score |
+| Evaluation Category | Score |
 |---|---:|
 | Sign labels | 15/15 |
 | Sign area accuracy | 10/10 |
@@ -222,6 +223,70 @@ Detect and classify supported road signs and determine obstacle presence and app
 - `PORTAL_RESULT.txt` — saved score summary
 
 The final source and packaged submission were checked for ZIP integrity. The reported private portal result was 40/40.
+
+---
+
+## Task 2C — ArUco-Based Autonomous Parking
+
+**Primary source:** `Task2C/task2c.py`
+
+### Objective
+
+Develop a parking controller that guides the Niti Vahan vehicle into a selected parking bay, aligns it with the bay's centre line, and brings it to a complete stop.
+
+The controller uses vehicle-pose information estimated from an ArUco marker by the provided vision pipeline. It returns steering, speed, and parking status to control the manoeuvre.
+
+### Key Concepts
+
+- Autonomous parking
+- ArUco marker-based pose estimation
+- Lateral position error
+- Vehicle heading correction
+- Steering control
+- Speed regulation
+- Marker-visibility handling
+- Stopping and final alignment
+- CoppeliaSim simulation
+
+### Parking Bays
+
+The task has two parking bays:
+
+- **Bay 0:** The nearer bay, identified by ArUco marker ID 0.
+- **Bay 1:** The farther bay, identified by ArUco marker ID 1.
+
+The controller must handle both target bays while keeping the vehicle within the narrow bay boundaries.
+
+### Implementation
+
+The `task2c.py` implementation includes a parking manoeuvre controller and helper logic for steering, speed adjustment, marker-loss handling, and stopping.
+
+The controller is tested in CoppeliaSim using the provided `Task_2C.ttt` scene.
+
+### Manual Simulation Test Results
+
+Both manual simulation runs completed, and the terminal reported that the vehicle parked.
+
+| Test | Result | Frames Processed | Marker Detection |
+|---|---|---:|---:|
+| Bay 0 | Parked | 158 | 158/158 frames |
+| Bay 1 | Parked | 278 | 278/278 frames |
+
+During manual testing, the vehicle was observed to stop inside the bay, straight and centred.
+
+These are **manual simulation results**, not official portal scores. Final parking accuracy and marks must be confirmed through the official e-Yantra evaluation.
+
+### Files
+
+- `task2c.py` — parking controller implementation
+- `Task_2C.ttt` — official simulation scene, used locally
+- `NV_Task2C_bay0.csv` — official evaluation recording, when generated
+- `NV_Task2C_bay1.csv` — official evaluation recording, when generated
+- `NV_Task2C.zip` — packaged submission, when generated
+
+The CSV files and submission ZIP should be added only after the official evaluation tool generates them.
+
+**Official portal score:** Pending.
 
 ---
 
@@ -254,22 +319,25 @@ eyrc-2026-27-niti-vahan/
 │   ├── NV_Task2A.json
 │   └── NV_Task2A_run.csv
 │
-└── Task2B/
-    ├── sign_obstacle_detection.py
-    ├── NV_Task2B.zip
-    ├── SHA256SUMS.txt
-    └── PORTAL_RESULT.txt
+├── Task2B/
+│   ├── sign_obstacle_detection.py
+│   ├── NV_Task2B.zip
+│   ├── SHA256SUMS.txt
+│   └── PORTAL_RESULT.txt
+│
+└── Task2C/
+    └── task2c.py
 ```
 
-*This layout describes the intended curated repository; individual files should be checked against the actual GitHub tree.*
+*This tree represents the intended curated repository structure. Supporting files should be checked against the actual GitHub tree.*
 
 ## Technology Stack
 
 - **Python** — implementation and control logic
 - **OpenCV** — computer-vision operations
 - **NumPy** — numerical and array processing
-- **CoppeliaSim** — robotics simulation
-- **eYantra AutoEval** — task evaluation
+- **CoppeliaSim EDU** — robotics simulation
+- **e-Yantra AutoEval** — official task evaluation
 - **Git and GitHub** — version control and source-code management
 
 ## Reproducibility and Version Control
@@ -299,5 +367,3 @@ Thanks to the e-Yantra Robotics Competition team for providing the Niti Vahan th
 **Team 4027 — Niti Vahan 2026–27**
 
 *Autonomous systems, computer vision, and robotics software.*
-
-
