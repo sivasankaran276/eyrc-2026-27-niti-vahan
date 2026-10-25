@@ -16,12 +16,12 @@ The repository preserves Python source code, submission ZIP files, evaluation JS
 
 | Task | Description | Recorded Result |
 |---|---|---:|
-| Task 1A | Ackermann Steering Geometry | Score not recorded here |
-| Task 1B | Path Tracking and Lane-Change Control | Score not recorded here |
+| Task 1A | Ackermann Steering Geometry | 20/20 |
+| Task 1B | Path Tracking and Lane-Change Control | 30/30 |
 | Task 1C | Vision-Based Lane Detection | 49.35/50 — earlier reported private result |
 | Task 2A | Lane Following and Stop Handling | 39.74/40 |
 | Task 2B | Road-Sign and Obstacle Detection | 40/40 |
-| Task 2C | ArUco-Based Autonomous Parking | Manual tests completed; official score pending |
+| Task 2C | ArUco-Based Autonomous Parking | 20/20 |
 
 **Task 1C result note:** An earlier private evaluation was reported as 49.35/50, with a public-set score of 45.38/50. A later result displayed 49.40/50 but was marked “Late, not eligible.” The eligibility and relationship between these attempts require confirmation from the competition portal.
 
